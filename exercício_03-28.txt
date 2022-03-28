@@ -4,3 +4,5 @@ Assuntos estudados na Trybe
 2) Bash
 3) GitHub
 
+HTML
+CSS
