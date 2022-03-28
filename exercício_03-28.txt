@@ -6,3 +6,4 @@ Assuntos estudados na Trybe
 
 HTML
 CSS
+Internet
