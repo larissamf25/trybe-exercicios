@@ -13,7 +13,26 @@ console.log(document.getElementById('pai').lastElementChild.previousElementSibli
 // Crie um filho para primeiroFilhoDoFilho .
 // A partir desse filho criado, acesse terceiroFilho .
 // Remova todos os elementos filhos de paiDoPai exceto pai , elementoOndeVoceEsta e primeiroFilhoDoFilho
-let referencial = document.getElementById('elementoOndeVoceEsta').parentNode;
+
+let me = document.getElementById('elementoOndeVoceEsta');
 let irmao = document.createElement('section');
-irmao.className= 'irmaoOndeVoceEsta';
-referencial.appendChild('testando o irmão');
+irmao.id = 'irmaoOndeVoceEsta';
+me.parentNode.appendChild(irmao);
+// console.log(document.getElementById('pai').querySelectorAll('section'));
+
+let filho = document.createElement('section');
+filho.id = 'terceiroDeOndeVoceEsta';
+me.appendChild(filho);
+// console.log(document.getElementById('elementoOndeVoceEsta').lastElementChild);
+
+let filhoDoFilho = document.createElement('section');
+filhoDoFilho.id = "filhoDoPrimeiroFilhoDoFilho";
+me.firstElementChild.appendChild(filhoDoFilho);
+// console.log(document.getElementById('primeiroFilhoDoFilho').firstElementChild);
+
+let novoEu = document.getElementById('filhoDoPrimeiroFilhoDoFilho');
+let referencia = novoEu.parentNode.parentNode.nextElementSibling;
+// console.log(document.getElementById('referencia'));
+
+pai.removeChild(me.previousSibling);
+console.log(document.getElementById('pai'));
