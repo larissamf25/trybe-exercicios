@@ -1,5 +1,5 @@
 const button = document.getElementById('add-button');
-const input = [document.getElementById('background-input'),document.getElementById('textColor-input'),document.getElementById('fontSize-input'),document.getElementById('lineSpace-input'),document.getElementById('fontType-input')];
+const input = [document.getElementById('textColor-input').value,document.getElementById('fontSize-input').value,document.getElementById('lineSpace-input').value,document.getElementById('fontType-input').value];
 const list = document.getElementById('preferences-list');
 
 function insertInfoInDOM(){
@@ -22,7 +22,7 @@ function addInfoToLocalStorage(){
 function initialRenderization(){
   if(localStorage.getItem('infos' === null)){
     localStorage.setItem('infos', JSON.stringify([]));
-  } else{
+  } else {
     const infosList = JSON.parse(localStorage.getItem('infos'));
     const listLength = infosList.length -1;
     for(let index = 0; index <= listLength; index += 1){
@@ -31,9 +31,10 @@ function initialRenderization(){
       listElement.appendChild(listElement);
     }
   }
-}
+ }
 
-GamepadButton.addEventListener('click', addInfoToLocalStorage);
+button.addEventListener('click', addInfoToLocalStorage);
+
 window.onload = function(){
   initialRenderization();
 }
