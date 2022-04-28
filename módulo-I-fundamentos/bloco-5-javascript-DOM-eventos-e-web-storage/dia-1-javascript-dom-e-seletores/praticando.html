@@ -48,11 +48,15 @@
         - document.getElementsByClassName()
         - document.getElementsByTagName()*/
       document.getElementsByTagName("p")[0].innerText = "Eu me vejo trabalhando na área e ganhando muito dinheiro";
+
       let corDeFundoMaior = document.getElementsByClassName("main-content")[0];
       corDeFundoMaior.style["background-color"] = "rgb(76,164,109)";
+
       let corDeFundoMenor = document.getElementsByClassName("center-content")[0];
       corDeFundoMenor.style["background-color"] = "white";
+
       document.getElementsByTagName("h1")[0].innerText = "Mudando o conteúdo do texto";
+      
       let maiusculo = document.getElementsByTagName("p");
       for(let i = 0; i < maiusculo.length; i +=1 ){
         maiusculo[i].style["text-transform"] = "uppercase";
