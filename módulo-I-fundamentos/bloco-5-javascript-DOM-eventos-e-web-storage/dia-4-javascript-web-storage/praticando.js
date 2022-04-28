@@ -13,8 +13,8 @@ function insertInfoInDOM(){
 
 function addInfoToLocalStorage(){
   const oldList = JSON.parse(localStorage.getItem('infos'));
-  const infoText = input.value;
-  oldList.push(infoText);
+  const infoText = input[].value;
+  oldList []= infoText;
   localStorage.setItem('infos',JSON.stringify(oldList));
   insertInfoInDOM();
 }
@@ -33,7 +33,7 @@ function initialRenderization(){
   }
 }
 
-GamepadButton.addEventListener('click', addInfoToLocalStorage);
+button.addEventListener('click', addInfoToLocalStorage);
 window.onload = function(){
   initialRenderization();
 }
