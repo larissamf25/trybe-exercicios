@@ -36,7 +36,42 @@ console.log(`Os números ${oddsAndEvens.sort(function(a, b){return a-b})} se enc
 const fatorial = (number) => (number == 1 || number == 0) ? 1 : number*fatorial(number - 1);
 console.log(fatorial(3));
 
-//  EXERCÍCIO 2
-// longestWord('Antônio foi no banheiro e não sabemos o que aconteceu') // retorna 'aconteceu'
+ EXERCÍCIO 2
+function longestWord(phrase) {
+  const words = phrase.split(" ");
+  let maior = '';
+  for (let index = 0; index < words.length; index += 1) {
+    if(words[index].length > maior.length) {
+      maior = words[index];
+    }
+  }
+  return maior;
+}
+
+console.log(longestWord('Antônio foi no banheiro e não sabemos o que aconteceu'));
 
 //  EXERCÍCIO 3
+// const button = document.getElementById('button');
+// const result = document.getElementById('result');
+// let count = 0;
+// result.innerText = count;
+// button.addEventListener('click', function() {
+//   count += 1;
+//   result.innerText = count;
+// })
+const count = document.getElementById('button').addEventListener('click', () => document.getElementById('result').innerText = (parseInt(document.getElementById('result').innerText) + 1));
+
+//  EXERCÍCIO 4
+const trocaX = (frase, palavra) => frase.replace('x',palavra);
+
+console.log(trocaX('Trybe x aqui!', 'Bebeto'));
+
+var skills = ['HTML', 'CSS', 'JS', 'React',  'Python'];
+
+const func2 = (parametro2) => `${parametro2}
+Minhas cinco principais habilidades são:
+${skills.sort()}
+#goTrybe`;
+console.log(func2(trocaX('Bebeto')));
+
+
