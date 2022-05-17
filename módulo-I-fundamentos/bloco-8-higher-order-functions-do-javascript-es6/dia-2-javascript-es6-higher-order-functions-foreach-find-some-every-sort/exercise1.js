@@ -35,7 +35,7 @@ const books = [
     genre: 'Ficção Científica',
     author: {
       name: 'Frank Herbert',
-      birthYear: 1920,
+      birthYear: 1921,
     },
     releaseYear: 1965,
   },
@@ -108,14 +108,14 @@ const someRelease80 = () => books.some((book) => book.releaseYear >= 1980 && boo
 //  console.log(someRelease80());
 
 const sameBorn = () => {
+  let control = true;
   let yearsBorn = [];
-   const verify = books.some((book) => {
-    console.log(yearsBorn);
-    console.log(book.author.birthYear)
-    console.log(yearsBorn.includes(book.author.birthYear));
-    yearsBorn.includes(book.author.birthYear);
+  books.forEach((book) => {
+    if(yearsBorn.includes(book.author.birthYear)) {
+      control = false;
+    }
     yearsBorn.push(book.author.birthYear);
   });
-  return verify;
+  return control;
 }
 console.log(sameBorn());
