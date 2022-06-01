@@ -1,53 +1,56 @@
 //  EXERCÍCIO 7
-// const uppercase = (str, callback) => {
-//   setTimeout(() => {
-//     callback(str.toUpperCase());
-//   }, 500);
-// };
+const uppercase = (str, callback) => {
+  setTimeout(() => {
+    callback(str.toUpperCase());
+  }, 500);
+};
 
-// test ('Deve passar!', (done) => {
-//   try {
-//     expect(uppercase('larissa', (param) => {
-
-//     })).toBe('LARISSA');
-//     done();
-//   } catch (err) {
-//     done(err);
-//   }
-// });
+test ('Deve passar!', (done) => {
+  uppercase('larissa', (param) => {
+    try {
+      expect(param).toBe('LARISSA');
+      done();
+    } catch (err) {
+      done(err);
+    }
+  });
+});
 
 //  EXERCÍCIO 9
-// const { getPokemonDetails } = require("./pratica");
+const { getPokemonDetails } = require("./get-pokemon-details");
 
-// describe("A função getPokemonDetails", () => {
-//   it("retorna erro quando procuramos um pokemon que não existe no banco de dados", (done) => {
-//     try {
-//       expect(getPokemonDetails((element) => element.name === 'Larissa', (erro, message) => {
-//         return (erro) ? erro : message;
-//       })).toEqual(true);
-//       done();
-//     } catch (err) {
-//       done(err);
-//     }
-    
-//   });
+describe("A função getPokemonDetails", () => {
+  it("retorna erro quando procuramos um pokemon que não existe no banco de dados", (done) => {
+    const expectedError = new Error('Não temos esse pokémon para você :(');
 
-//   it("retorna um pokemon que existe no banco de dados", () => {
-//     expect(getPokemonDetails((element) => element.name === 'Squirtle', (erro, message) => {
-//       return (erro) ? erro : message;
-//     })).toBe('Olá, seu pokémon é o Squirtle, o tipo dele é Water e a habilidade principal dele é Water Gun');
-//   });
-// });
+    function callback(error, result) {
+      expect(error).toEqual(expectedError);
+      done();
+    }
 
-//  EXERCÍCIO 10
-beforeEach(() => console.log('1 - beforeEach'));
-afterEach(() => console.log('1 - afterEach'));
+    getPokemonDetails((pokemon) => pokemon.name === 'Pikachu', callback);
+  });
 
-test('', () => console.log('1 - test'));
+  it("retorna um pokemon que existe no banco de dados", (done) => {
+    const expectedString = 'Olá, seu pokémon é o Charmander, o tipo dele é Fire e a habilidade principal dele é Ember';
 
-describe('Scoped / Nested block', () => { //  É INTERPRETADO COMO UM TESTE, ENTÃO TAMBÉM VAI RECEBER UM '1 - beforeEach' NO COMEÇO
-  beforeEach(() => console.log('2 - beforeEach'));
-  afterEach(() => console.log('2 - afterEach'));
+    function callback(err, result) {
+      expect(result).toBe(expectedString);
+      done();
+    }
 
-  test('', () => console.log('2 - test'));
+    getPokemonDetails((pokemon) => pokemon.name === 'Charmander', callback);
+  });
 });
+//  EXERCÍCIO 10
+// beforeEach(() => console.log('1 - beforeEach'));
+// afterEach(() => console.log('1 - afterEach'));
+
+// test('', () => console.log('1 - test'));
+
+// describe('Scoped / Nested block', () => { //  É INTERPRETADO COMO UM TESTE, ENTÃO TAMBÉM VAI RECEBER UM '1 - beforeEach' NO COMEÇO
+//   beforeEach(() => console.log('2 - beforeEach'));
+//   afterEach(() => console.log('2 - afterEach'));
+
+//   test('', () => console.log('2 - test'));
+// });

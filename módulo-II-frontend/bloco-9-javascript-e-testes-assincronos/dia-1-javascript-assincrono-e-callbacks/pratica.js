@@ -114,9 +114,9 @@ function getPokemonDetails(filter, callback) {
   }, 2);
 }
 
-getPokemonDetails((element) => element.name === 'Squirtle', (erro, message) => {
-  (erro) ? console.log(erro) : console.log(message);
-});
+//  getPokemonDetails((element) => element.name === 'Squirtle', (erro, message) => {
+//   (erro) ? console.log(erro) : console.log(message);
+// });
 
 module.exports = {
   getPokemonDetails,
