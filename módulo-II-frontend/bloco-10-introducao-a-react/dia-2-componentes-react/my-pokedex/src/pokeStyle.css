@@ -1,0 +1,48 @@
+.main {
+  background-color: rgb(93, 45, 226);
+}
+
+.main header {
+  padding-top: 30px;
+  color: white;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+.main .pokeList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+.pokeStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 400px;
+  background-color: rgb(93, 45, 226);
+  border: 2px white solid;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 15px;
+}
+
+.pokeStyle h2 {
+  color: white;
+  text-align: center;
+}
+
+.pokeStyle a {
+  text-decoration: none;
+  color: white;
+}
+
+.main footer {
+  padding-bottom: 30px;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
