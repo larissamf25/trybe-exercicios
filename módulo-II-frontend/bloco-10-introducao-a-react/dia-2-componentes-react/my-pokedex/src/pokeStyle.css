@@ -1,5 +1,10 @@
 .main {
   background-color: rgb(93, 45, 226);
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
 }
 
 .main header {
@@ -21,7 +26,7 @@
   justify-content: center;
   align-items: center;
   width: 350px;
-  height: 400px;
+  height: 371px;
   background-color: rgb(93, 45, 226);
   border: 2px white solid;
   border-radius: 8px;
