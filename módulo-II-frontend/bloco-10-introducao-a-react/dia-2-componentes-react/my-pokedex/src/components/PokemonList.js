@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './pokeStyle.css'
+import '../pokeStyle.css';
 
-class Pokedex extends Component {
+class PokemonList extends Component {
   render() {
     const {id, name, type, averageWeight, image, moreInfo} = this.props.character;
     return (
@@ -17,4 +17,4 @@ class Pokedex extends Component {
   }
 }
 
-export default Pokedex;
+export default PokemonList;
