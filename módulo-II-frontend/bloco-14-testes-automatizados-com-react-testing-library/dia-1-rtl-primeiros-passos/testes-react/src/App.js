@@ -1,6 +1,7 @@
 // App.js
 import React, { Component } from 'react';
 import './App.css';
+import ValidEmail from './components/ValidEmail';
 
 class App extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class App extends Component {
     this.state = {
       email: '',
       saveEmail: '',
+      valid: false,
     };
   }
 
@@ -16,11 +18,11 @@ class App extends Component {
   }
 
   changeSaveEmail(value) {
-    this.setState({ saveEmail: value, email: '' });
+    this.setState({ saveEmail: value, email: '', valid: true });
   }
 
   render() {
-    const { email, saveEmail } = this.state;
+    const { email, saveEmail, valid } = this.state;
     return (
       <div className="App">
         <label htmlFor="id-email">
@@ -40,7 +42,7 @@ class App extends Component {
           onClick={ () => this.changeSaveEmail(email) }
         />
         <input id="btn-id" type="button" value="Voltar" />
-        <h2 data-testid="id-email-user">{`Valor: ${saveEmail}`}</h2>
+        <ValidEmail email={ saveEmail } valid={ valid } />
       </div>
     );
   }
