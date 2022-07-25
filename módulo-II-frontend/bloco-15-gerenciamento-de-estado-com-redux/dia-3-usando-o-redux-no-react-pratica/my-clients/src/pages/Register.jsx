@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import saveAction from "../redux/actions";
 
 class Register extends React.Component {
@@ -19,21 +19,17 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSave = () => {
+  render() {
     const { register } = this.props;
     const { nome, idade, email } = this.state;
-    register({ nome, idade, email });
-    <Redirect to="/clients" />
-  }
-
-  render() {
     return (
       <div>
         <form>
           <input placeholder="nome" type="text" name="nome" onChange={ this.handleChange } />
           <input placeholder="idade" type="number" name="idade" onChange={ this.handleChange }/>
           <input placeholder="email" type="email" name="email" onChange={ this.handleChange }/>
-          <button type="button" onClick={ this.handleSave }>Save</button>
+          <button type="button" onClick={ () => register({ nome, idade, email }) }>Save</button>
+          <Link to="/clients">Clientes</Link>
         </form>
       </div>
     );
@@ -44,7 +40,7 @@ Register.propTypes = {
   register: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
   register: (value) => dispatch(saveAction(value)),
 });
 

@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   render() {
@@ -11,15 +9,12 @@ class Login extends React.Component {
         <form>
           <input placeholder="email" type="text"/>
           <input placeholder="senha" type="text"/>
-          <button type="button" onClick={ () => <Redirect to="/clients" /> }>Login</button>
+          <Link to="/clients">Clientes</Link>
         </form>
+        {/* { && <p>Login não efetuado</p> } */}
       </div>
     );
   }
-}
-
-Login.propTypes = {
-  
 }
 
 export default Login;
