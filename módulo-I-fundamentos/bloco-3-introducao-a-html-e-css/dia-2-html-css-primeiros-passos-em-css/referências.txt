@@ -1,4 +1,0 @@
-https://www.w3schools.com/
-https://fonts.google.com/
-https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Browser_styles
-https://coolors.co/e88d67-50514f-5ab1bb-fcf7f8-dcabdf

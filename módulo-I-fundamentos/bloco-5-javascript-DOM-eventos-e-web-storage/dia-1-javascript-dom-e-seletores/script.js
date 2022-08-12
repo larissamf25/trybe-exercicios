@@ -1,1 +1,0 @@
-document.getElementsByClassName("emergency-tasks").style = ".emergency-tasks";

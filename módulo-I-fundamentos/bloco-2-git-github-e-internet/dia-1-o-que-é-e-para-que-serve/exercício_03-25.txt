@@ -1,5 +1,0 @@
-Assuntos estudados na Trybe
-
-1) Unix
-2) Bash
-3) GitHub
