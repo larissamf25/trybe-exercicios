@@ -1,7 +1,22 @@
+import { useEffect, useState } from "react";
+
 function App() {
+  const [controlTimer, setControlTimer] = useState(true);
+  const [timer, setTimer] = useState(0);
+  const [number, setNumber] = useState(parseInt(Math.random() * 100));
+  // componentWillUnmount
+  useEffect(() => {
+    setTimeout(() => {
+      setTimer(timer + 1)
+      if(timer % 10 === 9) setNumber(parseInt(Math.random() * 100));
+      console.log(timer);
+    }, Number('1000'));
+    return () => console.log('desmontou')}, [number, timer]);
   return (
     <div>
-      Treinando useEffect do Hooks
+      <h1>Timer: { timer }</h1>
+      <h1>Number: { number }</h1>
+      { ((number % 3 === 0 || number % 5 === 0) && timer % 10 < 4) && <p>Acertou!!!!</p> }
     </div>
   );
 }
