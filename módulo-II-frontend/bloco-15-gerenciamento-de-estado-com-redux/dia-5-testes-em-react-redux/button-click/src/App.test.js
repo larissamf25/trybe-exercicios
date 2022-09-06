@@ -1,20 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
 import App from './App';
-import { combineReducers, createStore } from 'redux';
-import clickReducer from './reducers';
 import userEvent from '@testing-library/user-event';
-
-const renderWithRedux = (
-  component,
-  {
-    initialState,
-    store = createStore(combineReducers({ clickReducer }), initialState),
-  } = {},
-) => ({
-  ...render(<Provider store={ store }>{component}</Provider>),
-  store});
+import renderWithRedux from './helper';
 
 describe('testing clicks', () => {
   beforeEach(cleanup);
@@ -46,3 +34,25 @@ describe('practicing clicks', () => {
     expect(screen.getByText('11')).toBeInTheDocument();
   });
 });
+
+// import { fireEvent, waitFor } from '@testing-library/react';
+// import React from 'react';
+// import fetchMock from 'fetch-mock-jest';
+// import App from '../App';
+// import renderWithRedux from './helpers';
+
+// describe('Página principal', () => {
+//   test('Testa que o botão de adicionar cachorro está presente', async () => {
+//     const { queryByText } = renderWithRedux(<App />);
+//     const buttonDoguinho = queryByText('Novo Doguinho');
+
+//     expect(buttonDoguinho).toBeInTheDocument();
+
+//     fetchMock.getOnce('https://dog.ceo/api/breeds/image/random', {
+//       body: { message: 'myDogUrl' },
+//     });
+
+//     fireEvent.click(buttonDoguinho);
+//     await waitFor(() => expect(fetchMock.called()).toBeTruthy());
+//   });
+// });
