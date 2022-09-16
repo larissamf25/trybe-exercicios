@@ -1,0 +1,2 @@
+#RESUMÃO DE COMANDOS - CHEAT SHEETS
+https://github.com/tryber/Trybe-CheatSheets/blob/master/backend/mysql/simple-crud.md
