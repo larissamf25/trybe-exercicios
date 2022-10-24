@@ -1,7 +1,8 @@
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = process.env;
+const service = require('../services/User');
+const { validateCredentials } = require('./utils/validateCredentials');
+
 const validateBody = (body) =>
   Joi.object({
     username: Joi.string().min(5).alphanum().required()
@@ -16,26 +17,22 @@ const validateBody = (body) =>
   }).validate(body);
 
 module.exports = async (req, res, next) => {
+  const { error } = validateCredentials(req.body);
   const { error } = validateBody(req.body);
 
   if (error) return next(error);
 
-  if (req.body.username === 'admin' && req.body.password !== 's3nh4S3gur4???') {
-    const err = new Error('Invalid username or password');
-    err.statusCode = 401;
-    return next(err);
+  const { username, password } = req.body;
+
+  const { error: serviceError, token } = await service.login(username, password);
+
+  if (serviceError && serviceError.code === 'invalidCredentials') {
+    return next({ statusCode: 401, message: serviceError.message });
   }
 
-  const admin = req.body.username === 'admin' && req.body.password === 's3nh4S3gur4???';
-
-  const payload = {
-    username: req.body.username,
-    admin,
-  };
-
-  const token = jwt.sign(payload, JWT_SECRET, {
-    expiresIn: '1h',
-  });
+  if (serviceError) {
+    return next(serviceError);
+  }
 
   res.status(200).json({ token });
 };
