@@ -45,3 +45,5 @@ console.log(`Trapezio de bases 100cm e 70cm e altura 50cm: ${Exercise.trapezio(1
 console.log(`Círculo de raio 25cm: ${Exercise.circle(25)}cm²`);
 console.log(`Círculo de raio 25cm: ${Exercise.circle(100)}cm²`);
 console.log(`Círculo de raio 25cm: ${Exercise.circle(12.5)}cm²`);
+console.log(Exercise.weekDays[1]);
+console.log(Exercise.rainbow['vermelho']);

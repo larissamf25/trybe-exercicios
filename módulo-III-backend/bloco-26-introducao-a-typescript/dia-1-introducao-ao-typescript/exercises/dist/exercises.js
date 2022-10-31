@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.circle = exports.trapezio = exports.losango = exports.rectangle = exports.square = exports.triangle = exports.sumArray = exports.add = exports.personAge = exports.greeter = void 0;
+exports.rainbow = exports.weekDays = exports.circle = exports.trapezio = exports.losango = exports.rectangle = exports.square = exports.triangle = exports.sumArray = exports.add = exports.personAge = exports.greeter = void 0;
 function greeter(name) {
     return `Olá ${name}!`;
 }
@@ -41,3 +41,24 @@ function circle(raio) {
     return raio * raio * Math.PI;
 }
 exports.circle = circle;
+var weekDays;
+(function (weekDays) {
+    weekDays[weekDays["Monday"] = 1] = "Monday";
+    weekDays[weekDays["Tuesday"] = 2] = "Tuesday";
+    weekDays[weekDays["Wednesday"] = 3] = "Wednesday";
+    weekDays[weekDays["Thrusday"] = 4] = "Thrusday";
+    weekDays[weekDays["Friday"] = 5] = "Friday";
+    weekDays[weekDays["Saturday"] = 6] = "Saturday";
+    weekDays[weekDays["Sunday"] = 7] = "Sunday";
+})(weekDays = exports.weekDays || (exports.weekDays = {}));
+;
+var rainbow;
+(function (rainbow) {
+    rainbow["vermelho"] = "red";
+    rainbow["laranja"] = "orange";
+    rainbow["amarelo"] = "yellow";
+    rainbow["verde"] = "green";
+    rainbow["azul"] = "blue";
+    rainbow["roxo"] = "purple";
+})(rainbow = exports.rainbow || (exports.rainbow = {}));
+;
