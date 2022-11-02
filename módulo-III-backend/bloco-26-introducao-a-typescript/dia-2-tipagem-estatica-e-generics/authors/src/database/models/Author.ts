@@ -1,10 +1,26 @@
-const AuthorModel = (sequelize, DataTypes) => {
-  const Author = sequelize.define('Author', {
-    id: DataTypes.NUMBER,
-    name: DataTypes.STRING,
-  });
+import { Model, INTEGER, STRING } from 'sequelize';
+import db from './index';
 
-  return Author;
-};
+class Author extends Model {
+  declare id: number;
+  declare name: string;
+}
 
-module.exports = AuthorModel;
+Author.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: STRING(30),
+    allowNull: false,
+  },
+}, {
+  sequelize: db,
+  modelName: 'authors',
+  timestamps: false,
+});
+
+export default Author;

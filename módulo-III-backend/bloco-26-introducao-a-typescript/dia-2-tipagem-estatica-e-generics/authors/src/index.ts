@@ -1,6 +1,6 @@
 import sequelize from 'sequelize';
-import Author from './database/models/AuthorModel';
-import Book from './database/models/BookModel';
+import Author from './database/models/Author';
+import Book from './database/models/Book';
 
 (async () => {
   const data = await Author.findAll({

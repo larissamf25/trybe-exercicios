@@ -1,10 +1,50 @@
-const BookModel = (sequelize, DataTypes) => {
-  const Book = sequelize.define('Book', {
-    id: DataTypes.NUMBER,
-    genre: DataTypes.STRING,
-  });
+import { Model, INTEGER, STRING } from 'sequelize';
+import db from './index';
+import Author from './AuthorModel';
 
-  return Book;
-};
+class Book extends Model {
+  declare id: number;
+  declare title: string;
+  declare authorId: number;
+  declare genreId: number;
+}
 
-module.exports = BookModel;
+Book.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  title: {
+    type: STRING(30),
+    allowNull: false,
+  },
+  authorId: {
+    type: INTEGER,
+    allowNull: false,
+    references: {
+      model: 'authors',
+      key: 'id',
+    }
+  },
+  genreId: {
+    type: INTEGER,
+    allowNull: false,
+    references: {
+      model: 'genres',
+      key: 'id',
+    }
+  }
+}, {
+  sequelize: db,
+  modelName: 'books',
+  underscored: true,
+  timestamps: false,
+});
+
+Book.belongsTo(Author, { foreignKey: 'id' });
+
+Author.hasMany(Book, { foreignKey: 'authorId' });
+
+export default Book;
