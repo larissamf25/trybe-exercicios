@@ -1,14 +1,70 @@
-class Student {
-  matricula: number;
-  nome: string;
+interface Employee {
+  registration: string;
+  salary: number;
+  admissionDate: Date;
+
+  generateRegistration(newRegistry: number): string;
+}
+
+class Subject {
+
+  constructor(private name: string) {
+    this.name = name;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  setName(newName: string) {
+    if (newName.length >= 3) this.name = newName;
+    else throw new Error('O nome deve conter no mínimo 3 caracteres.');
+  }
+}
+
+class Person {
+  name: string;
+  birthDate: Date;
+
+  constructor(name: string, date: Date) {
+    this.name = name;
+    this.birthDate = date;
+  };
+
+  getName() {
+    return this.name;
+  }
+
+  getBirth() {
+    return this.birthDate;
+  }
+
+  setName(newName: string) {
+    if (newName.length >= 3) this.name = newName;
+    else console.log('Nome inválido');
+  }
+
+  setBirth(newDate: Date) {
+    if (newDate.getTime() < new Date().getTime()) this.birthDate = newDate;
+    else console.log('Data inválida');
+  }
+}
+
+const maria = new Person('Maria da Consolação', new Date('1980/01/25'));
+const luiza = new Person('Luiza Andrade', new Date('2005/10/02'));
+
+console.log(maria);
+console.log(luiza);
+
+class Student extends Person{
+  matricula: string;
+  // nome: string;
   provas: [number, number, number, number];
   trabalhos: [number, number];
 
-  constructor(matricula: number, nome: string, provas: [number, number, number, number], trabalhos: [number, number]) {
-    this.matricula = matricula;
-    this.nome = nome;
-    this.provas = provas;
-    this.trabalhos = trabalhos;
+  constructor(nome: string, date: Date) {
+    super(nome, date);
+    this.matricula = this.generateMatricula();
   }
 
   soma() {
@@ -17,6 +73,46 @@ class Student {
 
   media() {
     return this.soma() / 4;
+  }
+
+  generateMatricula(): string {
+    const randomStr = String(Date.now() * (Math.random() + 1)).replace(/\W/g, '');
+
+    return `STU${randomStr}`;
+  }
+}
+
+class Teacher extends Person implements Employee {
+  registration: string;
+  salary: number;
+  admissionDate: Date;
+  subject: Subject;
+
+  constructor(name: string, date: Date, salary: number, subject: Subject) {
+    super(name, date);
+    this.salary = salary;
+    this.subject = subject;
+    this.admissionDate = new Date();
+    this.registration = this.generateRegistration(12345678910111213);
+  }
+
+  generateRegistration(newRegistry: number) {
+    if ((newRegistry + '').length >= 16) {
+      this.registration = newRegistry + '';
+      return `Registro: ${this.registration}`;
+    }
+    return 'Insira um registro válido';
+  }
+
+  setAdmissionDate(value: Date) {
+    if (value.getTime() > new Date().getTime()) throw new Error('A data de admissão não pode ser uma data no futuro.');
+
+    this.admissionDate = value;
+  }
+
+  setSalary(newSalary) {
+    if (newSalary > 0) this.salary = newSalary;
+    else throw new Error('O salário deve ser positivo');
   }
 }
 
