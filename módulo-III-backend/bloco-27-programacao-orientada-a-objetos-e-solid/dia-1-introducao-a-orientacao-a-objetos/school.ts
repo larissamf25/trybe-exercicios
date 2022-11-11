@@ -1,11 +1,3 @@
-interface Employee {
-  registration: string;
-  salary: number;
-  admissionDate: Date;
-
-  generateRegistration(newRegistry: number): string;
-}
-
 class Subject {
 
   constructor(private name: string) {
@@ -22,7 +14,7 @@ class Subject {
   }
 }
 
-class Person {
+abstract class Person {
   name: string;
   birthDate: Date;
 
@@ -45,48 +37,122 @@ class Person {
   }
 
   setBirth(newDate: Date) {
-    if (newDate.getTime() < new Date().getTime()) this.birthDate = newDate;
+    if (new Date().getTime() - newDate.getTime() <= 120 * 365.25 * 24 * 3600 * 1000) this.birthDate = newDate;
     else console.log('Data inválida');
   }
 }
 
-const maria = new Person('Maria da Consolação', new Date('1980/01/25'));
-const luiza = new Person('Luiza Andrade', new Date('2005/10/02'));
+abstract class Employee extends Person{
+  registration: string;
+  salary: number;
+  admissionDate: Date;
 
-console.log(maria);
-console.log(luiza);
+  constructor(name: string, date: Date) {
+    super(name, date);
+  }
 
-class Student extends Person{
-  matricula: string;
-  // nome: string;
+  abstract generateRegistration(newRegistry: number): string;
+}
+
+
+// const maria = new Person('Maria da Consolação', new Date('1980/01/25'));
+// const luiza = new Person('Luiza Andrade', new Date('2005/10/02'));
+
+// console.log(maria);
+// console.log(luiza);
+
+interface Enrollable {
+  enrollment: string;
+  generateEnrollment(): string;
+}
+
+class Student extends Person implements Enrollable {
+  enrollment: string;
   provas: [number, number, number, number];
   trabalhos: [number, number];
 
   constructor(nome: string, date: Date) {
     super(nome, date);
-    this.matricula = this.generateMatricula();
+    this.enrollment = this.generateEnrollment();
   }
 
-  soma() {
+  sumGrades() {
     return this.provas.reduce((acc, nota) => acc + nota, 0);
   }
 
-  media() {
-    return this.soma() / 4;
+  sumAverageGrades() {
+    return this.sumGrades() / 4;
   }
 
-  generateMatricula(): string {
+  generateEnrollment(): string {
     const randomStr = String(Date.now() * (Math.random() + 1)).replace(/\W/g, '');
 
     return `STU${randomStr}`;
   }
+
+  addEvaluationResult(newEvaluation: number) {
+    this.provas.push(newEvaluation);
+  }
+}
+class Evaluation {
+  score: number;
+  teacher: Teacher;
+
+  constructor(score: number, teacher: Teacher) {
+    this.score = score;
+    this.teacher = teacher;
+  }
+
+  getScore() {
+    return this.score;
+  }
+
+  getTeacher() {
+    return this.teacher;
+  }
+
+  setScore(newScore: number) {
+    if (newScore < 0) throw new Error('A pontuação não pode ser negativa');
+    else if(this.type === 'prova' && newScore > 25) throw new Error('A pontuação não pode passar de 25 para tipos prova');
+    else if(this.type === 'trabalho' && newScore > 50) throw new Error('A pontuação não pode passar de 50 para tipos trabalho');
+    else this.score = newScore;
+  }
 }
 
-class Teacher extends Person implements Employee {
+class Exam extends Evaluation{
+  constructor(score: number, teacher: Teacher) {
+    super(score, teacher);
+  }
+}
+
+class Work extends Evaluation {
+  constructor(score: number, teacher: Teacher) {
+    super(score, teacher);
+  }
+}
+
+class EvaluationResult {
+  evaluation: Evaluation;
+  score: number;
+
+  constructor(evaluation: Evaluation, score: number) {
+    this.evaluation = evaluation;
+    this.score = score;
+  }
+
+  setScore(newScore: number) {
+    if (newScore < 0) throw new Error('A pontuação não pode ser negativa');
+    else if(newScore > this.evaluation.score) throw new Error('A pontuação não pode ser maior que a pontuação da avaliação')
+    else this.score = newScore;
+  }
+}
+
+class Teacher extends Employee implements Enrollable {
   registration: string;
   salary: number;
   admissionDate: Date;
   subject: Subject;
+  enrollment: string;
 
   constructor(name: string, date: Date, salary: number, subject: Subject) {
     super(name, date);
@@ -104,117 +170,20 @@ class Teacher extends Person implements Employee {
     return 'Insira um registro válido';
   }
 
+  generateEnrollment(): string {
+    const randomStr = String(Date.now() * (Math.random() + 1)).replace(/\W/g, '');
+
+    return `STU${randomStr}`;
+  }
+
   setAdmissionDate(value: Date) {
     if (value.getTime() > new Date().getTime()) throw new Error('A data de admissão não pode ser uma data no futuro.');
 
     this.admissionDate = value;
   }
 
-  setSalary(newSalary) {
+  setSalary(newSalary: number) {
     if (newSalary > 0) this.salary = newSalary;
     else throw new Error('O salário deve ser positivo');
-  }
-}
-
-class Client {
-  nome: string;
-
-  constructor(nome: string) {
-    this.nome = nome;
-  }
-}
-
-class Product {
-  nome: string;
-  preco: number;
-
-  constructor(nome: string, preco: number) {
-    this.nome = nome;
-    this.preco = preco;
-  }
-}
-
-class Order {
-  cliente: string;
-  itens: number[];
-  pagamento: string;
-  desconto: number;
-
-  constructor(cliente: string, itens: number[], pagamento: string, desconto: number) {
-    this.cliente = cliente;
-    this.itens = itens;
-    this.pagamento = pagamento;
-    this.desconto = desconto;
-  }
-
-  total() {
-    return this.itens.reduce((acc, item) => acc + item, 0);
-  }
-
-  totalComDesconto() {
-    return this.total() * (1 - this.desconto);
-  }
-}
-
-class Data {
-  dia: number;
-  mes: number;
-  ano: number;
-
-  constructor(dia: number, mes: number, ano: number) {
-    if (!Data.validateDate(dia, mes, ano)) {
-      this.dia = 1;
-      this.mes = 1;
-      this.ano = 1990;
-    } else {
-      this.dia = dia;
-      this.mes = mes;
-      this.ano = ano;
-    }
-  }
-
-  private static validateDate(day: number, month: number, year: number)
-    : boolean {
-    const dateStr = `${year}-${month}-${day}`;
-
-    if (new Date(dateStr).getDate() !== day) return false;
-
-    return true;
-  }
-
-  getMonthName() {
-    switch(this.mes) {
-      case 1: return 'Janeiro';
-      case 2: return 'Fevereiro';
-      case 3: return 'Março';
-      case 4: return 'Abril';
-      case 5: return 'Maio';
-      case 6: return 'Junho';
-      case 7: return 'Julho';
-      case 8: return 'Agosto';
-      case 9: return 'Setembro';
-      case 10: return 'Outubro';
-      case 11: return 'NOvembro';
-      default: return 'Dezembro';
-    }
-  }
-
-  isLeapYear() {
-    return (this.ano % 4 === 0);
-  }
-
-  compare(newData: Data) {
-    if (newData.dia === this.dia && newData.mes === this.mes && this.ano === newData.ano) return 0;
-    if (this.ano > newData.ano || (this.ano === newData.ano && this.mes > newData.mes) || (newData.mes === this.mes && this.ano === newData.ano && this.dia > newData.dia)) return 1;
-    return -1;
-  }
-
-  format(formato: string) {
-    switch (formato) {
-      case 'dd/mm/aaaa': return `${this.dia}/${this.mes}/${this.ano}`;
-      case 'aaaa-mm-dd': return `${this.ano}/${this.mes}/${this.dia}`;
-      case 'dd de M de aa': return `${this.dia} de ${this.getMonthName()} de ${this.ano}`;
-      default: return `${this.dia}, ${this.getMonthName()} de ${this.ano}`;
-    }
   }
 }
