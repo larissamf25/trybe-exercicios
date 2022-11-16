@@ -1,4 +1,4 @@
-import Notificator from './Notificator';
+import Notificator from './notificator';
 
 export default class EmailNotification implements Notificator {
   private email: string;

@@ -48,6 +48,26 @@ class Plants {
     await fs.writeFile(filePath, JSON.stringify(data, null, 2));
   }
 
+  public async getPlants(): Promise<IPlant[]> {
+    const plantsRaw = await fs.readFile(this.PLANTS_PATH, { encoding: 'utf8' });
+    const plants: IPlant[] = JSON.parse(plantsRaw);
+    return plants;
+  }
+
+  public async getPlantById(id: string): Promise<IPlant | null> {
+    const plants = await this.getPlants();
+
+    const plantById = plants.find((plant) => plant.id === id);
+    if (!plantById) return null;
+    return plantById;
+  }
+
+  public async getPlantsThatNeedsSunWithId(id: string): Promise<IPlant[]> {
+    const plants = await this.getPlants();
+    const filteredPlants = plants.filter(plantsNeedSun(id));
+    return filteredPlants;
+  }
+
   public static initPlant(plant: IPlant): IPlant {
     const { id, breed, needsSun, origin, specialCare, size } = plant;
 
@@ -70,52 +90,19 @@ class Plants {
     return newPlant;
   }
 
-  public async getPlants(): Promise<IPlant[]> {
-    const plantsRaw = await fs.readFile(this.PLANTS_PATH, { encoding: 'utf8' });
-    const plants: IPlant[] = JSON.parse(plantsRaw);
-    return plants;
-  }
-
-  public async getPlantById(
-    id: string,
-  ): Promise<IPlant | null> {
+  public async savePlant(plant: IPlant): Promise<IPlant> {
     const plants = await this.getPlants();
 
-    const plantById = plants.find((plant) => plant.id === id);
-    if (!plantById) return null;
-    return plantById;
+    const newPlant = Plants.initPlant({ ...plant, id: randomUUID() });
+    plants.push(newPlant);
+    this.saveFile(FileType.Plants, plants);
+
+    await this.updateOpsInfo(1);
+
+    return newPlant;
   }
 
-  public async removePlantById(
-    id: string,
-  ): Promise<IPlant | null> {
-    const plants = await this.getPlants();
-
-    const removedPlant = plants.find((plant) => plant.id === id);
-    if (!removedPlant) return null;
-
-    const newPlants = plants.filter((plant) => plant.id !== id);
-    this.saveFile(FileType.Plants, newPlants);
-
-    await this.updateOpsInfo(-1);
-
-    return removedPlant;
-  }
-
-  public async getPlantsThatNeedsSunWithId(
-    id: string,
-  ): Promise<IPlant[]> {
-    const plants = await this.getPlants();
-
-    const filteredPlants = plants.filter(plantsNeedSun(id));
-
-    return filteredPlants;
-  }
-
-  public async editPlant(
-    plantId: string,
-    newPlant: IPlant,
-  ): Promise<IPlant> {
+  public async editPlant(plantId: string, newPlant: IPlant): Promise<IPlant> {
     const plants = await this.getPlants();
 
     const updatedPlants = plants.map((plant) => {
@@ -127,18 +114,18 @@ class Plants {
     return newPlant;
   }
 
-  public async savePlant(
-    plant: IPlant,
-  ): Promise<IPlant> {
+  public async removePlantById(id: string): Promise<IPlant | null> {
     const plants = await this.getPlants();
 
-    const newPlant = Plants.initPlant({ ...plant, id: randomUUID() });
-    plants.push(newPlant);
-    this.saveFile(FileType.Plants, plants);
+    const removedPlant = plants.find((plant) => plant.id === id);
+    if (!removedPlant) return null;
 
-    await this.updateOpsInfo(1);
+    const newPlants = plants.filter((plant) => plant.id !== id);
+    this.saveFile(FileType.Plants, newPlants);
 
-    return newPlant;
+    await this.updateOpsInfo(-1);
+
+    return removedPlant;
   }
 }
 

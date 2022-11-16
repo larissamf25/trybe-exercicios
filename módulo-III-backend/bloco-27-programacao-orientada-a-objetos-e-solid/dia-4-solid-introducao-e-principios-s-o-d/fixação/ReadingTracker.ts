@@ -1,5 +1,7 @@
-import EmailNotification from './EmailNotification';
-import Notificator from './Notificator';
+import emailNotification from './emailNotification';
+import Notification from './notifications';
+import Notificator from './notificator';
+import ConsoleNotification from './consoleNotification';
 
 type Book = {
   book: string;
@@ -11,13 +13,14 @@ class ReadingTracker {
   private readingGoal: number;
   private booksRead: number;
   private wishlist: Book[];
-  notificator: Notificator;
+  notificator: Notification;
 
-  constructor(readingGoal: number, email: string) {
-    this.notificator = new EmailNotification(email);
+  constructor(
+    readingGoal: number,
+    public notificator: Notificator = new ConsoleNotification('console'),
+  ) {
     this.readingGoal = readingGoal;
     this.booksRead = 0;
-    this.wishlist = [];
   }
 
   addToWishlist(book: Book): void {
@@ -44,7 +47,7 @@ class ReadingTracker {
   }
 }
 
-const readTracker = new ReadingTracker(20, 'larissamf25@gmail.com');
+const readTracker = new ReadingTracker(20);
 readTracker.addToWishlist({ book: 'The Road', author: 'Cormac McCarthy', genre: 'Dystopia' });
 readTracker.showWishlist();
 readTracker.trackReadings(12);
