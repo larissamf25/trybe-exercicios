@@ -1,1 +1,7 @@
-#Crie uma função que receba um número inteiro N e retorne o somatório de todos os números de 1 até N. Por exemplo, para N = 5, o valor esperado será 15.
+def sum(n):
+    total = n
+    for n in range(n):
+        total += n
+    return total
+
+print(sum(6))

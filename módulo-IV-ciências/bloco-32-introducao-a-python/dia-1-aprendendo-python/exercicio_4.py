@@ -1,3 +1,8 @@
-# Crie uma função que receba uma lista de nomes e retorne o nome com a maior quantidade de caracteres. Por exemplo, para ["José", "Lucas", "Nádia", "Fernanda", "Cairo", "Joana"], o retorno deve ser "Fernanda".
+def bigger(list):
+    control = ''
+    for word in list:
+        if len(word) > len(control):
+            control = word
+    return control
 
-# 🦜 Uma dica: Utilize a função len() para verificar o tamanho do nome.
+print(bigger(["José", "Lucas", "Nádia", "Fernanda", "Cairo", "Joana"]))
