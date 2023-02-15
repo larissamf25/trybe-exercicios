@@ -11,10 +11,7 @@ def retrieve_pokemons_by_type(type, reader):
     return pokemons_by_type
 
 
-import json
-
-
-def retrieve_pokemons_by_type(type, filepath):
+def retrieve_pokemons_by_type2(type, filepath):
     with open(filepath) as file:
         pokemons = json.load(file)["results"]
         pokemons_by_type = [
